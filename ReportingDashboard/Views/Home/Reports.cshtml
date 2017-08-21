@@ -3,42 +3,38 @@
     ViewBag.Title = "Reports";
 }
 
-
 <h2>@ViewBag.Title</h2>
-
-
 
     <p>
         Find by name: @Html.TextBoxFor(m => m.SearchText, new { id = "searchBox" })
         <input type="button" value="Search" name="Search" onclick="location.href='@Url.Action("Reports", "Home")?search=' + $('#searchBox').val()"/>
     </p>
-    <p>@Model.SearchText</p>
 
     <table style="background-color: white; width: 100%;">
         <tr>
-            <th style="border: 2px solid black; text-align: center; width: 20%">Username</th>
+            <th style="border: 2px solid black; text-align: center; width: 20%">@Html.ActionLink("Username", "Reports", new { sortOrder = ViewBag.NameSortParm })</th>
             <th style="border: 2px solid black; text-align: center; width: 20%">Current Day</th>
             <th style="border: 2px solid black; text-align: center; width: 20%">Current Time</th>
             <th style="border: 2px solid black; text-align: center; width: 20%">In or Out</th>
-            <th style="border: 2px solid black; text-align: center; width: 20%">Current Date</th>
+            <th style="border: 2px solid black; text-align: center; width: 20%">@Html.ActionLink("Current Date", "Reports", new { sortOrder = ViewBag.DateSortParm })</th>
         </tr>
 
         @foreach (var item in Model.userTimes)
         {
             <tr>
-                <td style="padding-left: 20px;">
+                <td style="border: 2px solid black; padding-left: 20px;">
                     @Html.DisplayFor(modelItem => item.username)
                 </td>
-                <td style="padding-left: 20px;">
+                <td style="border: 2px solid black; padding-left: 20px;">
                     @Html.DisplayFor(modelItem => item.cDay)
                 </td>
-                <td style="padding-left: 20px;">
+                <td style="border: 2px solid black; padding-left: 20px;">
                     @Html.DisplayFor(modelItem => item.cTime)
                 </td>
-                <td style="padding-left: 50px;">
+                <td style="border: 2px solid black; padding-left: 50px;">
                     @Html.DisplayFor(modelItem => item.InOROut)
                 </td>
-                <td style="padding-left: 50px;">
+                <td style="border: 2px solid black; padding-left: 50px;">
                     @Html.DisplayFor(modelItem => item.cDate)
                 </td>
             </tr>

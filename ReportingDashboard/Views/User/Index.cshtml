@@ -1,8 +1,23 @@
-@model IEnumerable<ReportingDashboard.Models.User>
-@{    
-    WebGrid grid = new WebGrid(Model);
+@model ReportingDashboard.Models.ReportsViewModel
+@{
+    ViewBag.Title = "List of users";
 }
-<h2>User List</h2>
-<div id="grid"> 
-  @grid.GetHtml()
-</div>
+<h2>@ViewBag.Title</h2>
+<table style="background-color: white; width: 100%;">
+    <tr>
+        <th style="border: 2px solid black; text-align: center; width: 20%">User ID</th>
+        <th style="border: 2px solid black; text-align: center; width: 20%">Username</th>
+    </tr>
+
+    @foreach (var item in Model.users)
+    {
+        <tr>
+            <td style="border: 2px solid black; padding-left: 20px;">
+                @Html.DisplayFor(modelItem => item.userid)
+            </td>
+            <td style="border: 2px solid black; padding-left: 20px;">
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+        </tr>
+    }
+</table>

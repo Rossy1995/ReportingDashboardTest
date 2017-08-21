@@ -10,5 +10,7 @@ namespace ReportingDashboard.Models
         public string SearchText { get; set; }
 
         public List<UserTime> userTimes { get; set; }
+
+        public List<User> users { get; set; }
     }
 }

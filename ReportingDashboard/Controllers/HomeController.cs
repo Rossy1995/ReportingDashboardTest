@@ -13,16 +13,7 @@ namespace ReportingDashboard.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
-        public ReportsViewModel GetReportList()
-        {
-            DbAccessContext db = new DbAccessContext();
-            var responseList = (from r in db.UserTime
-                                select r).ToList();
-            return new ReportsViewModel()
-            {
-                userTimes = responseList
-            };
-        }
+        private DbAccessContext db = new DbAccessContext();
 
         public ActionResult Index()
         {
@@ -30,17 +21,34 @@ namespace ReportingDashboard.Controllers
         }
 
         [Authorize]       
-        public ActionResult Reports(string search)
+        public ActionResult Reports(string search, string sortOrder)
         {
-            DbAccessContext db = new DbAccessContext();
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "user_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
             var report = from r in db.UserTime
                          select r;
-           
+
             if (!String.IsNullOrEmpty(search))
-                {
-                    report = report.Where(r => r.username.Contains(search));
-                }
-            
+            {
+                report = report.Where(r => r.username.Contains(search));
+            }
+
+            switch (sortOrder)
+            {
+                case "user_desc":
+                    report = report.OrderByDescending(r => r.username);
+                    break;
+                case "User":
+                    report = report.OrderBy(r => r.username);
+                    break;
+                case "Date":
+                    report = report.OrderBy(r => r.cDate);
+                    break;
+                case "date_desc":
+                    report = report.OrderByDescending(r => r.cDate);
+                    break;
+            }
 
             return View(new ReportsViewModel()
             {
@@ -53,7 +61,6 @@ namespace ReportingDashboard.Controllers
         [Authorize]
         public ActionResult ExportToCSV(string search)
         {            
-            DbAccessContext db = new DbAccessContext();
             StringWriter sw = new StringWriter();
             var responseList = from r in db.UserTime
                                select r;
@@ -77,7 +84,6 @@ namespace ReportingDashboard.Controllers
             Response.Write(sw.ToString());
 
             Response.End();
-
 
             return View(new ReportsViewModel()
             {

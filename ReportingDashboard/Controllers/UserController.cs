@@ -15,7 +15,13 @@ namespace ReportingDashboard.Controllers
 
         public ActionResult Index()
         {
-            return View(db.User.ToList());
+            var report = from r in db.User
+                         select r;
+
+            return View(new ReportsViewModel()
+            {
+                users = report.ToList()
+            });
         }
 
         //
