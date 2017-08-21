@@ -27,7 +27,7 @@ namespace ReportingDashboard.Controllers
         //
         // GET: /Account/Register
         [Authorize]
-        public ActionResult Register()
+        public ActionResult RegisterUser()
         {
             return View();
         }
@@ -37,7 +37,7 @@ namespace ReportingDashboard.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(User user)
+        public ActionResult RegisterUser(User user)
         {
             if (ModelState.IsValid)
             {
