@@ -1,0 +1,8 @@
+@model IEnumerable<ReportingDashboard.Models.User>
+@{    
+    WebGrid grid = new WebGrid(Model);
+}
+<h2>User List</h2>
+<div id="grid"> 
+  @grid.GetHtml()
+</div>

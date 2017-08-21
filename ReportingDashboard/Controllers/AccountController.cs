@@ -158,31 +158,24 @@ namespace ReportingDashboard.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        public ActionResult Register(User user)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                string constr = ConfigurationManager.ConnectionStrings["GCEntities"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
                 {
-                    string query = "INSERT INTO User(name, pass) VALUES(@name, @pass)";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query))
-                    {                         
-                        cmd.Connection = con;
-                        con.Open();
-                        cmd.Parameters.AddWithValue("@name", user.name);
-                        cmd.Parameters.AddWithValue("@pass", user.pass);
-                        con.Close();
-                    }
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    return RedirectToAction("Index", "Home");
                 }
-
-                
-            } catch(Exception ex)
-            {
-
+                AddErrors(result);
             }
-            return View(user);
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         //
@@ -216,7 +209,7 @@ namespace ReportingDashboard.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");

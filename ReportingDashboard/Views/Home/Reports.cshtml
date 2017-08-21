@@ -1,4 +1,9 @@
-﻿@{
+﻿@model IEnumerable<ReportingDashboard.Models.UserTime>
+@{
+    WebGrid grid = new WebGrid(Model);
     ViewBag.Title = "Reports";
 }
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
+<div id="grid">
+    @grid.GetHtml()
+</div>

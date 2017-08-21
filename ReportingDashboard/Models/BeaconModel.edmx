@@ -52,17 +52,17 @@
           <Property Name="InOROut" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cDate" Type="DateTime" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="GCEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="UserTimes" EntityType="Self.UserTime" />
+        <EntityContainer Name="GC" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="UserTime" EntityType="Self.UserTime" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GCModelStoreContainer" CdmEntityContainer="GCEntities">
-          <EntitySetMapping Name="Users">
+        <EntityContainerMapping StorageEntityContainer="GCModelStoreContainer" CdmEntityContainer="GC">
+          <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="GCModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="userid" ColumnName="userid" />
@@ -71,7 +71,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserTimes">
+          <EntitySetMapping Name="UserTime">
             <EntityTypeMapping TypeName="GCModel.UserTime">
               <MappingFragment StoreEntitySet="UserTime">
                 <ScalarProperty Name="timeid" ColumnName="timeid" />
@@ -97,7 +97,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
