@@ -215,7 +215,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="DBConnect.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -238,6 +237,7 @@
     <Compile Include="Models\DbAccessContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ReportsViewModel.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>BeaconModel.tt</DependentUpon>
     </Compile>

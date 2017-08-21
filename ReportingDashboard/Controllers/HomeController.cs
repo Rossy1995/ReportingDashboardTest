@@ -13,12 +13,15 @@ namespace ReportingDashboard.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
-        public List<UserTime> GetReportList()
+        public ReportsViewModel GetReportList()
         {
             DbAccessContext db = new DbAccessContext();
-
-            return (from r in db.UserTime
-                     select r).ToList();
+            var responseList = (from r in db.UserTime
+                                select r).ToList();
+            return new ReportsViewModel()
+            {
+                userTimes = responseList
+            };
         }
 
         public ActionResult Index()
@@ -26,37 +29,47 @@ namespace ReportingDashboard.Controllers
             return View();
         }
 
-        [Authorize]
-        public ActionResult Reports(string searchString)
+        [Authorize]       
+        public ActionResult Reports(string search)
         {
             DbAccessContext db = new DbAccessContext();
             var report = from r in db.UserTime
                          select r;
-            if (!String.IsNullOrEmpty(searchString))
+           
+            if (!String.IsNullOrEmpty(search))
+                {
+                    report = report.Where(r => r.username.Contains(search));
+                }
+            
+
+            return View(new ReportsViewModel()
             {
-                report = report.Where(r => r.username.Contains(searchString));
-            }
-            return View(report.ToList());
+                userTimes = report.ToList(),
+                SearchText = search
+            });
+
         }
 
         [Authorize]
-        public ActionResult ExportToCSV(string searchString)
-        {
+        public ActionResult ExportToCSV(string search)
+        {            
+            DbAccessContext db = new DbAccessContext();
             StringWriter sw = new StringWriter();
+            var responseList = from r in db.UserTime
+                               select r;
+
             sw.WriteLine("\"Username\",\"Current Day\",\"Current Time\",\"In or Out\",\"Current Date\"");
 
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment; filename=Report.csv");
             Response.ContentType = "text/csv";
-            DbAccessContext db = new DbAccessContext();
-            var responseList = from r in db.UserTime
-                         select r;
-            if (!String.IsNullOrEmpty(searchString))
+
+            if (!String.IsNullOrEmpty(search))
             {
-                responseList = responseList.Where(x => x.username.Contains(searchString)).OrderBy(x => x.cTime);
+                responseList = responseList.Where(r => r.username.Contains(search)).OrderBy(r => r.cTime);
             }
-            //responseList.Select(item => sw.WriteLine($"\"{item.username}\",\"Current Day\",\"Current Time\",\"In or Out\",\"Current Date\""));
-            foreach(var item in responseList)
+
+            foreach (var item in responseList)
             {
                 sw.WriteLine($"\"{item.username}\",\"{item.cDay}\",\"{item.cTime}\",\"{item.InOROut}\",\"{item.cDate}\"");
             }
@@ -65,7 +78,13 @@ namespace ReportingDashboard.Controllers
 
             Response.End();
 
-            return View(responseList);
+
+            return View(new ReportsViewModel()
+            {
+                userTimes = responseList.ToList(),
+                SearchText= search
+            });
+
         }
     }
 }
