@@ -27,9 +27,45 @@ namespace ReportingDashboard.Controllers
         }
 
         [Authorize]
-        public ActionResult Reports()
+        public ActionResult Reports(string searchString)
         {
-            return View(this.GetReportList());
+            DbAccessContext db = new DbAccessContext();
+            var report = from r in db.UserTime
+                         select r;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                report = report.Where(r => r.username.Contains(searchString));
+            }
+            return View(report.ToList());
+        }
+
+        [Authorize]
+        public ActionResult ExportToCSV(string searchString)
+        {
+            StringWriter sw = new StringWriter();
+            sw.WriteLine("\"Username\",\"Current Day\",\"Current Time\",\"In or Out\",\"Current Date\"");
+
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", "attachment; filename=Report.csv");
+            Response.ContentType = "text/csv";
+            DbAccessContext db = new DbAccessContext();
+            var responseList = from r in db.UserTime
+                         select r;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                responseList = responseList.Where(x => x.username.Contains(searchString)).OrderBy(x => x.cTime);
+            }
+            //responseList.Select(item => sw.WriteLine($"\"{item.username}\",\"Current Day\",\"Current Time\",\"In or Out\",\"Current Date\""));
+            foreach(var item in responseList)
+            {
+                sw.WriteLine($"\"{item.username}\",\"{item.cDay}\",\"{item.cTime}\",\"{item.InOROut}\",\"{item.cDate}\"");
+            }
+
+            Response.Write(sw.ToString());
+
+            Response.End();
+
+            return View(responseList);
         }
     }
 }

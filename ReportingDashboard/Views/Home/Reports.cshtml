@@ -1,41 +1,46 @@
-﻿@model IList<ReportingDashboard.Models.UserTime>
+﻿@model List<ReportingDashboard.Models.UserTime>
 @{
     ViewBag.Title = "Reports";
 }
 
+<h2>@ViewBag.Title</h2>
+
 @using (Html.BeginForm("Reports", "Home", FormMethod.Post))
 {
-    <br />
-    <br />
-    <h2>@ViewBag.Title</h2>
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
 
+@using (Html.BeginForm("ExportToCSV", "Home", FormMethod.Post))
+{
     <table style="background-color: white; width: 100%;">
         <tr>
-            <th style="border: 1px solid black; text-align: left; width: 20%; padding-left: 20px;">Username</th>
+            <th style="border: 2px solid black; text-align: left; width: 20%; padding-left: 20px;">Username</th>
             <th style="border: 2px solid black; text-align: center; width: 20%">Current Day</th>
             <th style="border: 2px solid black; text-align: center; width: 20%">Current Time</th>
             <th style="border: 2px solid black; text-align: center; width: 20%">In or Out</th>
             <th style="border: 2px solid black; text-align: center; width: 20%">Current Date</th>
         </tr>
 
-        @foreach (var itm in Model)
+        @foreach (var item in Model)
         {
-
             <tr>
                 <td style="padding-left: 20px;">
-                    @Html.DisplayFor(m => itm.username)
+                    @Html.DisplayFor(m => item.username)
                 </td>
                 <td style="padding-left: 20px;">
-                    @Html.DisplayFor(m => itm.cDay)
+                    @Html.DisplayFor(m => item.cDay)
                 </td>
                 <td style="padding-left: 20px;">
-                    @Html.DisplayFor(m => itm.cTime)
+                    @Html.DisplayFor(m => item.cTime)
                 </td>
                 <td style="padding-left: 50px;">
-                    @Html.DisplayFor(m => itm.InOROut)
+                    @Html.DisplayFor(m => item.InOROut)
                 </td>
                 <td style="padding-left: 50px;">
-                    @Html.DisplayFor(m => itm.cDate)
+                    @Html.DisplayFor(m => item.cDate)
                 </td>
             </tr>
         }
