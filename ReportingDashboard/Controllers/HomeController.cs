@@ -1,17 +1,25 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using ReportingDashboard.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ReportingDashboard.Models;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 namespace ReportingDashboard.Controllers
 {
     [RequireHttps]
     public class HomeController : Controller
     {
+        public List<UserTime> GetReportList()
+        {
+            DbAccessContext db = new DbAccessContext();
 
-        private ReportingDashboard.Models.GC db = new ReportingDashboard.Models.GC();
-
+            return (from r in db.UserTime
+                     select r).ToList();
+        }
 
         public ActionResult Index()
         {
@@ -21,7 +29,7 @@ namespace ReportingDashboard.Controllers
         [Authorize]
         public ActionResult Reports()
         {
-            return View(db.UserTime.ToList());
+            return View(this.GetReportList());
         }
     }
 }
