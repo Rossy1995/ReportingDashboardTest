@@ -1,13 +1,8 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Configuration;
 using System.Data;
-using MySql.Data.MySqlClient;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -149,7 +144,7 @@ namespace ReportingDashboard.Controllers
 
         //
         // GET: /Account/Register
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
