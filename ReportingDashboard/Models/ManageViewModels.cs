@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace ReportingDashboard.Models
+namespace IdentitySample.Models
 {
     public class IndexViewModel
     {
@@ -12,6 +12,7 @@ namespace ReportingDashboard.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public bool IsGoogleAuthenticatorEnabled { get; set; }
     }
 
     public class ManageLoginsViewModel
@@ -58,6 +59,7 @@ namespace ReportingDashboard.Models
         public string ConfirmPassword { get; set; }
     }
 
+
     public class AddPhoneNumberViewModel
     {
         [Required]
@@ -83,4 +85,5 @@ namespace ReportingDashboard.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
 }

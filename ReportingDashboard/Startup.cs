@@ -1,8 +1,6 @@
-﻿using Microsoft.Owin;
-using Owin;
+﻿using Owin;
 
-[assembly: OwinStartupAttribute(typeof(ReportingDashboard.Startup))]
-namespace ReportingDashboard
+namespace IdentitySample
 {
     public partial class Startup
     {
