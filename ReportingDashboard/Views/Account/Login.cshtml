@@ -8,7 +8,9 @@
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @if (ViewBag.Status == null || !ViewBag.Status)
+        {
+            using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 <h4>Use a local account to log in.</h4>
@@ -48,6 +50,26 @@
                         @Html.ActionLink("Forgot your password?", "ForgotPassword")
                     </p>
             }
+        }
+        else
+        {
+            <div>
+                @ViewBag.Message
+            </div>
+            <div>
+                <img src="@ViewBag.BarcodeImageUrl" />
+            </div>
+            <div>
+                Manual Setup Code: @ViewBag.SetupCode
+            </div>
+            <div>
+                @using (Html.BeginForm("Verify2FA", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <input type="text" name="passcode"/>
+                    <input type="submit" class="btn btn-success"/>     
+                }
+            </div>
+        }
         </section>
     </div>
     <div class="col-md-4">

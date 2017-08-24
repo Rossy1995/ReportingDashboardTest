@@ -6,6 +6,7 @@ using System.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Google.Authenticator;
 using ReportingDashboard.Models;
 
 namespace ReportingDashboard.Controllers
@@ -15,6 +16,7 @@ namespace ReportingDashboard.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private const string key = "qaz123!@@";
 
         public AccountController()
         {
@@ -66,6 +68,8 @@ namespace ReportingDashboard.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            string message = "";
+            bool status = false;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -87,7 +91,20 @@ namespace ReportingDashboard.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    status = true;
+                    message = "2FA Verification";
+                    Session["Username"] = model.Email;
+
+                    TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
+                    string userUniqueKey = model.Email + key;
+                    Session["UserUniqueKey"] = userUniqueKey;
+                    var setupInfo = tfa.GenerateSetupCode("Reporting Login", model.Email, userUniqueKey, 300, 300);
+                    ViewBag.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
+                    ViewBag.SetupCode = setupInfo.ManualEntryKey;
+
+                    ViewBag.Message = message;
+                    ViewBag.Status = status;
+                    return View();
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -99,6 +116,19 @@ namespace ReportingDashboard.Controllers
             }
         }
 
+        public ActionResult Verify2FA()
+        {
+            var token = Request["passcode"];
+            TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
+            string userUniqueKey = Session["UserUniqueKey"].ToString();
+            bool isValid = tfa.ValidateTwoFactorPIN(userUniqueKey, token);
+            if (isValid)
+            {
+                Session["IsValid2FA"] = true;
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Login", "Account");
+        }
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
