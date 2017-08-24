@@ -68,43 +68,36 @@ namespace ReportingDashboard.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            string message = "";
-            bool status = false;
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            /*var user = await UserManager.FindByNameAsync(model.Email);
-            if (user != null)
-            {
-                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-                {
-                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
-                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
-                    return View("Error");
-                }
-            }*/
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
+
+            // If it was a successful login
+            /*if (result == SignInStatus.Success || result == SignInStatus.RequiresVerification)
+            {
+                // check that their email address is confirmed:
+                var user = await UserManager.FindByNameAsync(model.Email);
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    // sign them out!
+                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+                    TempData["UserId"] = user.Id;
+                    return RedirectToAction("UnconfirmedEmail");
+                }
+
+                // reset their login 
+            }*/
+
             switch (result)
             {
                 case SignInStatus.Success:
-                    status = true;
-                    message = "2FA Verification";
-                    Session["Username"] = model.Email;
-
-                    TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
-                    string userUniqueKey = model.Email + key;
-                    Session["UserUniqueKey"] = userUniqueKey;
-                    var setupInfo = tfa.GenerateSetupCode("Reporting Login", model.Email, userUniqueKey, 300, 300);
-                    ViewBag.BarcodeImageUrl = setupInfo.QrCodeSetupImageUrl;
-                    ViewBag.SetupCode = setupInfo.ManualEntryKey;
-
-                    ViewBag.Message = message;
-                    ViewBag.Status = status;
-                    return View();
+                    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -116,19 +109,48 @@ namespace ReportingDashboard.Controllers
             }
         }
 
-        public ActionResult Verify2FA()
+        /*[AllowAnonymous]
+        public ActionResult UnconfirmedEmail()
         {
-            var token = Request["passcode"];
-            TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
-            string userUniqueKey = Session["UserUniqueKey"].ToString();
-            bool isValid = tfa.ValidateTwoFactorPIN(userUniqueKey, token);
-            if (isValid)
-            {
-                Session["IsValid2FA"] = true;
-                return RedirectToAction("Index", "Home");
-            }
-            return RedirectToAction("Login", "Account");
+            ResendValidationEmailViewModel ViewModel = new ResendValidationEmailViewModel();
+            ViewModel.UserId = (string)TempData["UserId"];
+            return View(ViewModel);
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<ActionResult> ResendValidationEmail(ResendValidationEmailViewModel ViewModel)
+        {
+            string callbackUrl = await generateConfirmAccountEmail(ViewModel.UserId);
+
+#if DEBUG
+            ViewModel.CallbackUrl = callbackUrl;
+#endif
+
+            return View(ViewModel);
+        }
+
+
+        private async Task<string> generateConfirmAccountEmail(string userId)
+        {
+            string email = UserManager.GetEmail(userId);
+
+            string code =
+                await UserManager.GenerateEmailConfirmationTokenAsync(userId);
+
+            var routeValues = new { userId = userId, code = code };
+
+            var callbackUrl =
+                Url.Action("ConfirmEmail", "Account", routeValues, protocol: Request.Url.Scheme);
+
+            Emailer emailer = new Emailer();
+            emailer.sendEmail(email,
+                      "Confirm your account",
+                      "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return callbackUrl;
+        }*/
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -191,11 +213,19 @@ namespace ReportingDashboard.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                /*if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    return RedirectToAction("Index", "Home");
-                }
+                    var callbackUrl = await generateConfirmAccountEmail(user.Id);
+
+#if DEBUG
+                    TempData["ViewBagLink"] = callbackUrl;
+#endif
+
+                    ViewBag.Message = "Please check your email and confirm your account, as you must be confirmed "
+                                    + "before you can log in.";
+
+                    return View("Info");
+                }*/
                 AddErrors(result);
             }
 

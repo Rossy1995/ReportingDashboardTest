@@ -38,7 +38,7 @@ namespace ReportingDashboard.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult RegisterUser(User user)
-        {
+        { 
             if (ModelState.IsValid)
             {
                 db.User.Add(new User { name = user.name, pass = user.pass });
