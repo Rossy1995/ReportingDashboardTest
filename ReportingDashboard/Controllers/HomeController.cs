@@ -36,11 +36,11 @@ namespace ReportingDashboard.Controllers
 
             switch (sortOrder)
             {
-                case "user_desc":
-                    report = report.OrderByDescending(r => r.username);
-                    break;
                 case "User":
                     report = report.OrderBy(r => r.username);
+                    break;
+                case "user_desc":
+                    report = report.OrderByDescending(r => r.username);
                     break;
                 case "Date":
                     report = report.OrderBy(r => r.cDate);
