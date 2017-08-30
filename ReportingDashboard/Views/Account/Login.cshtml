@@ -1,5 +1,5 @@
-﻿@using ReportingDashboard.Models
-@model LoginViewModel
+﻿@model IdentitySample.Models.LoginViewModel
+
 @{
     ViewBag.Title = "Log in";
 }
@@ -8,10 +8,7 @@
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-        @if (ViewBag.Status == null || !ViewBag.Status)
-        {
-            using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
                 @Html.AntiForgeryToken()
                 <h4>Use a local account to log in.</h4>
                 <hr />
@@ -44,41 +41,20 @@
                     </div>
                 </div>
                 <p>
-                    @Html.ActionLink("Register as a new user", "Register")
+                    @Html.ActionLink("Register a new user?", "Register")
                 </p>
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>
+                <p>
+                    @Html.ActionLink("Forget your password?", "ForgotPassword")
+                </p>
             }
-        }
-        else
-        {
-            <div>
-                @ViewBag.Message
-            </div>
-            <div>
-                <img src="@ViewBag.BarcodeImageUrl" />
-            </div>
-            <div>
-                Manual Setup Code: @ViewBag.SetupCode
-            </div>
-            <div>
-                @using (Html.BeginForm("Verify2FA", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    <input type="text" name="passcode"/>
-                    <input type="submit" class="btn btn-success"/>     
-                }
-            </div>
-        }
         </section>
     </div>
     <div class="col-md-4">
         <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            @Html.Partial("_ExternalLoginsListPartial", new IdentitySample.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
