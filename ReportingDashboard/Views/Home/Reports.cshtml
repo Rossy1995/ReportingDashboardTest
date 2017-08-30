@@ -22,20 +22,20 @@
         @foreach (var item in Model.userTimes)
         {
             <tr>
-                <td style="border: 2px solid black; padding-left: 20px;">
+                <td style="border: 2px solid black; text-align: center">
                     @Html.DisplayFor(modelItem => item.username)
                 </td>
-                <td style="border: 2px solid black; padding-left: 20px;">
+                <td style="border: 2px solid black; text-align: center">
                     @Html.DisplayFor(modelItem => item.cDay)
                 </td>
-                <td style="border: 2px solid black; padding-left: 20px;">
+                <td style="border: 2px solid black; text-align: center">
                     @Html.DisplayFor(modelItem => item.cTime)
                 </td>
-                <td style="border: 2px solid black; padding-left: 50px;">
+                <td style="border: 2px solid black; text-align: center">
                     @Html.DisplayFor(modelItem => item.InOROut)
                 </td>
-                <td style="border: 2px solid black; padding-left: 50px;">
-                    @Html.DisplayFor(modelItem => item.cDate)
+                <td style="border: 2px solid black; text-align: center">
+                    @String.Format("{0:d}", item.cDate)
                 </td>
             </tr>
         }

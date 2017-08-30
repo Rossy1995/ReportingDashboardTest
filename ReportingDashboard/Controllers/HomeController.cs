@@ -1,4 +1,4 @@
-﻿using ClosedXML.Excel;
+﻿using PagedList;
 using ReportingDashboard.Models;
 using System;
 using System.Collections.Generic;
@@ -55,7 +55,6 @@ namespace ReportingDashboard.Controllers
                 userTimes = report.ToList(),
                 SearchText = search
             });
-
         }
 
         [Authorize]

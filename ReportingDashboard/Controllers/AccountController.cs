@@ -8,10 +8,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Google.Authenticator;
 using ReportingDashboard.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
 namespace ReportingDashboard.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -197,6 +198,7 @@ namespace ReportingDashboard.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [Auth(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
@@ -213,25 +215,16 @@ namespace ReportingDashboard.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                /*if (result.Succeeded)
+               
+                if (result.Succeeded)
                 {
-                    var callbackUrl = await generateConfirmAccountEmail(user.Id);
-
-#if DEBUG
-                    TempData["ViewBagLink"] = callbackUrl;
-#endif
-
-                    ViewBag.Message = "Please check your email and confirm your account, as you must be confirmed "
-                                    + "before you can log in.";
-
-                    return View("Info");
-                }*/
-                AddErrors(result);
+                    result = UserManager.AddToRole(user.Id, "Admin");
+                    return RedirectToAction("Index", "Home");
+                }                   
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
+        }    
 
         //
         // GET: /Account/ConfirmEmail

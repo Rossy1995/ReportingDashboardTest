@@ -12,7 +12,7 @@ namespace ReportingDashboard.Controllers
 	   
 	     //
         // GET: /User/
-        [Authorize]
+        [Auth(Roles = "Admin")]
         public ActionResult Index()
         {
             var report = from r in db.User
@@ -26,7 +26,7 @@ namespace ReportingDashboard.Controllers
 
         //
         // GET: /Account/Register
-        [Authorize]
+        [Auth(Roles = "Admin")]
         public ActionResult RegisterUser()
         {
             return View();
