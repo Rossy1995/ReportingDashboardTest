@@ -6,10 +6,7 @@ using System.Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Google.Authenticator;
 using ReportingDashboard.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 
 namespace ReportingDashboard.Controllers
 {
@@ -74,26 +71,7 @@ namespace ReportingDashboard.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
-
-            // If it was a successful login
-            /*if (result == SignInStatus.Success || result == SignInStatus.RequiresVerification)
-            {
-                // check that their email address is confirmed:
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-                {
-                    // sign them out!
-                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-
-                    TempData["UserId"] = user.Id;
-                    return RedirectToAction("UnconfirmedEmail");
-                }
-
-                // reset their login 
-            }*/
 
             switch (result)
             {
@@ -109,48 +87,6 @@ namespace ReportingDashboard.Controllers
                     return View(model);
             }
         }
-
-        /*[AllowAnonymous]
-        public ActionResult UnconfirmedEmail()
-        {
-            ResendValidationEmailViewModel ViewModel = new ResendValidationEmailViewModel();
-            ViewModel.UserId = (string)TempData["UserId"];
-            return View(ViewModel);
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<ActionResult> ResendValidationEmail(ResendValidationEmailViewModel ViewModel)
-        {
-            string callbackUrl = await generateConfirmAccountEmail(ViewModel.UserId);
-
-#if DEBUG
-            ViewModel.CallbackUrl = callbackUrl;
-#endif
-
-            return View(ViewModel);
-        }
-
-
-        private async Task<string> generateConfirmAccountEmail(string userId)
-        {
-            string email = UserManager.GetEmail(userId);
-
-            string code =
-                await UserManager.GenerateEmailConfirmationTokenAsync(userId);
-
-            var routeValues = new { userId = userId, code = code };
-
-            var callbackUrl =
-                Url.Action("ConfirmEmail", "Account", routeValues, protocol: Request.Url.Scheme);
-
-            Emailer emailer = new Emailer();
-            emailer.sendEmail(email,
-                      "Confirm your account",
-                      "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-            return callbackUrl;
-        }*/
 
         //
         // GET: /Account/VerifyCode
@@ -218,7 +154,7 @@ namespace ReportingDashboard.Controllers
                
                 if (result.Succeeded)
                 {
-                    result = UserManager.AddToRole(user.Id, "Admin");
+                    result = UserManager.AddToRole(user.Id, "User");
                     return RedirectToAction("Index", "Home");
                 }                   
             }
