@@ -227,6 +227,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="AuthAttribute.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="SendEmail.cs" />
     <Compile Include="Startup.Owin.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -345,6 +346,8 @@
     <Content Include="Views\User\RegisterUser.cshtml" />
     <Content Include="Views\Manage\EnableGoogleAuthenticator.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

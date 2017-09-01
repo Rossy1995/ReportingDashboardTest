@@ -14,10 +14,12 @@ namespace ReportingDashboard.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext context;
         private const string key = "qaz123!@@";
 
         public AccountController()
         {
+            context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -137,6 +139,8 @@ namespace ReportingDashboard.Controllers
         [Auth(Roles = "Admin")]
         public ActionResult Register()
         {
+            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
+                                            .ToList(), "Name", "Name");
             return View();
         }
 
@@ -154,9 +158,15 @@ namespace ReportingDashboard.Controllers
                
                 if (result.Succeeded)
                 {
-                    result = UserManager.AddToRole(user.Id, "User");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+ 
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                      
                     return RedirectToAction("Index", "Home");
-                }                   
+                }
+                ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
+                                          .ToList(), "Name", "Name");
+                AddErrors(result);
             }
             // If we got this far, something failed, redisplay form
             return View(model);

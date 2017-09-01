@@ -23,11 +23,12 @@
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Register User", "RegisterUser", "User")</li>
+                        <li>@Html.ActionLink("Register App User", "RegisterUser", "User")</li>
+                        <li>@Html.ActionLink("Register Dashboard User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
                         <li>@Html.ActionLink("Reports", "Reports", "Home")</li>
                         <li>@Html.ActionLink("Manage Users", "Index", "User")</li>
                     }
-                    else
+                    else if (User.IsInRole("User"))
                     {
                         <li>@Html.ActionLink("Reports", "Reports", "Home")</li>
                     }
