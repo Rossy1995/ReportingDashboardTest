@@ -36,12 +36,14 @@
                 @Html.ActionLink("[Enable]", "EnableGoogleAuthenticator")
             }
         </dd>
-        <dt>
-            Create new user role:
-        </dt>
-        <dd>
-            @Html.ActionLink("[Create]", "CreateNewUserRole")
-        </dd>
-
+            @if (User.IsInRole("Admin"))
+            {
+                <dt>
+                    Create new user role:
+                </dt>
+                <dd>
+                    @Html.ActionLink("[Create]", "Create")
+                </dd>
+            }
     </dl>
 </div>

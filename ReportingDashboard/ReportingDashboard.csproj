@@ -227,7 +227,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="AuthAttribute.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="SendEmail.cs" />
     <Compile Include="Startup.Owin.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -309,7 +308,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -334,7 +335,6 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ManageLogins.cshtml" />
@@ -346,8 +346,7 @@
     <Content Include="Views\User\RegisterUser.cshtml" />
     <Content Include="Views\Manage\EnableGoogleAuthenticator.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
-    <Content Include="Views\Role\Index.cshtml" />
-    <Content Include="Views\Role\Create.cshtml" />
+    <Content Include="Views\Manage\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
