@@ -1,12 +1,8 @@
-﻿using PagedList;
-using ReportingDashboard.Models;
+﻿using ReportingDashboard.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 namespace ReportingDashboard.Controllers
 {
@@ -18,6 +14,18 @@ namespace ReportingDashboard.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public JsonResult GetAllCheckIns()
+        {
+            Models.GC obj = new Models.GC();
+            var users = obj.UserTime.Select(x => new
+            {
+                Username = x.username,
+                cTime = x.cTime,
+                InOrOut = x.InOROut
+            }).ToList();
+            return Json(users, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]       
