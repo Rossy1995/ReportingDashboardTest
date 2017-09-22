@@ -9,6 +9,7 @@ namespace ReportingDashboard.Controllers
 	public class UserController:Controller
 	{
 	    private DbAccessContext db = new DbAccessContext();
+	    private String hash;
 
         //
         // GET: /User/
@@ -41,7 +42,8 @@ namespace ReportingDashboard.Controllers
         { 
             if (ModelState.IsValid)
             {
-                db.User.Add(new user { name = user.name, pass = user.pass });
+                String hash = md5(user.pass);
+                db.User.Add(new user { name = user.name, pass = hash });
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
@@ -54,5 +56,18 @@ namespace ReportingDashboard.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
-	}
+
+	    private string md5(string sPassword)
+	    {
+	        System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
+	        byte[] bs = System.Text.Encoding.UTF8.GetBytes(sPassword);
+	        bs = x.ComputeHash(bs);
+	        System.Text.StringBuilder s = new System.Text.StringBuilder();
+	        foreach (byte b in bs)
+	        {
+	            s.Append(b.ToString("x2").ToLower());
+	        }
+	        return s.ToString();
+	    }
+    }
 }
