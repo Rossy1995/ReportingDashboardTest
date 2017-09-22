@@ -16,7 +16,7 @@ namespace ReportingDashboard.Controllers
             return View();
         }
 
-        public JsonResult GetAllCheckIns()
+        /*public JsonResult GetAllCheckIns()
         {
             Models.GC obj = new Models.GC();
             var users = obj.UserTime.Select(x => new
@@ -26,7 +26,7 @@ namespace ReportingDashboard.Controllers
                 InOrOut = x.InOROut
             }).ToList();
             return Json(users, JsonRequestBehavior.AllowGet);
-        }
+        }*/
 
         [Authorize]       
         public ActionResult Reports(string search, string sortOrder)
@@ -60,7 +60,7 @@ namespace ReportingDashboard.Controllers
 
             return View(new ReportsViewModel()
             {
-                userTimes = report.ToList(),
+                UserTimes = report.ToList(),
                 SearchText = search
             });
         }
@@ -85,7 +85,7 @@ namespace ReportingDashboard.Controllers
 
             foreach (var item in responseList)
             {
-                sw.WriteLine($"\"{item.username}\",\"{item.cDay}\",\"{item.cTime}\",\"{item.InOROut}\",\"{item.cDate}\"");
+                sw.WriteLine($"\"{item.username}\",\"{item.cDay}\",\"{item.cTime}\",\"{item.InOrOut}\",\"{item.cDate}\"");
             }
 
             Response.Write(sw.ToString());
@@ -94,7 +94,7 @@ namespace ReportingDashboard.Controllers
 
             return View(new ReportsViewModel()
             {
-                userTimes = responseList.ToList(),
+                UserTimes = responseList.ToList(),
                 SearchText= search
             });
 

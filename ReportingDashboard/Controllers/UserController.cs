@@ -8,9 +8,9 @@ namespace ReportingDashboard.Controllers
 {
 	public class UserController:Controller
 	{
-	   private Models.GC db = new Models.GC();
-	   
-	     //
+	    private DbAccessContext db = new DbAccessContext();
+
+        //
         // GET: /User/
         [Auth(Roles = "Admin")]
         public ActionResult Index()
@@ -20,7 +20,7 @@ namespace ReportingDashboard.Controllers
 
             return View(new ReportsViewModel()
             {
-                users = report.ToList()
+                Users = report.ToList()
             });
         }
 
@@ -37,11 +37,11 @@ namespace ReportingDashboard.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult RegisterUser(User user)
+        public ActionResult RegisterUser(user user)
         { 
             if (ModelState.IsValid)
             {
-                db.User.Add(new User { name = user.name, pass = user.pass });
+                db.User.Add(new user { name = user.name, pass = user.pass });
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }

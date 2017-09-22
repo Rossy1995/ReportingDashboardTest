@@ -8,12 +8,12 @@ namespace ReportingDashboard.Models
 {
     public class DbAccessContext : DbContext
     {
-        public DbAccessContext(): base("GC") {}
-        public DbSet <UserTime> UserTime
+        public DbAccessContext(): base("gc") {}
+        public DbSet <usertime> UserTime
         {
             get;
             set;
         }
-        public DbSet <User> User { get; set; }
+        public DbSet <user> User { get; set; }
     }
 }

@@ -4,8 +4,8 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GCModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="User">
+      <Schema Namespace="gcModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.1" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="user">
           <Key>
             <PropertyRef Name="userid" />
           </Key>
@@ -13,27 +13,27 @@
           <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="pass" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserTime">
+        <EntityType Name="usertime">
           <Key>
             <PropertyRef Name="timeid" />
           </Key>
           <Property Name="timeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="cDay" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="cTime" Type="time" Precision="0" Nullable="false" />
-          <Property Name="InOROut" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="cDate" Type="date" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="100" />
+          <Property Name="cDay" Type="varchar" MaxLength="100" />
+          <Property Name="cTime" Type="time" Precision="0" />
+          <Property Name="InOrOut" Type="varchar" MaxLength="3" />
+          <Property Name="cDate" Type="date" />
         </EntityType>
-        <EntityContainer Name="GCModelStoreContainer">
-          <EntitySet Name="User" EntityType="Self.User" Schema="GC" store:Type="Tables" />
-          <EntitySet Name="UserTime" EntityType="Self.UserTime" Schema="GC" store:Type="Tables" />
+        <EntityContainer Name="gcModelStoreContainer">
+          <EntitySet Name="user" EntityType="Self.user" Schema="gc" store:Type="Tables" />
+          <EntitySet Name="usertime" EntityType="Self.usertime" Schema="gc" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="User">
+      <Schema Namespace="gcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="user">
           <Key>
             <PropertyRef Name="userid" />
           </Key>
@@ -41,44 +41,44 @@
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserTime">
+        <EntityType Name="usertime">
           <Key>
             <PropertyRef Name="timeid" />
           </Key>
           <Property Name="timeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cDay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cTime" Type="Time" Nullable="false" />
-          <Property Name="InOROut" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cDate" Type="DateTime" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cDay" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cTime" Type="Time" />
+          <Property Name="InOrOut" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="cDate" Type="DateTime" />
         </EntityType>
-        <EntityContainer Name="GC" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="User" EntityType="Self.User" />
-          <EntitySet Name="UserTime" EntityType="Self.UserTime" />
+        <EntityContainer Name="gcEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="usertimes" EntityType="Self.usertime" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GCModelStoreContainer" CdmEntityContainer="GC">
-          <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="GCModel.User">
-              <MappingFragment StoreEntitySet="User">
+        <EntityContainerMapping StorageEntityContainer="gcModelStoreContainer" CdmEntityContainer="gcEntities">
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="gcModel.user">
+              <MappingFragment StoreEntitySet="user">
                 <ScalarProperty Name="userid" ColumnName="userid" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="pass" ColumnName="pass" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserTime">
-            <EntityTypeMapping TypeName="GCModel.UserTime">
-              <MappingFragment StoreEntitySet="UserTime">
+          <EntitySetMapping Name="usertimes">
+            <EntityTypeMapping TypeName="gcModel.usertime">
+              <MappingFragment StoreEntitySet="usertime">
                 <ScalarProperty Name="timeid" ColumnName="timeid" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="cDay" ColumnName="cDay" />
                 <ScalarProperty Name="cTime" ColumnName="cTime" />
-                <ScalarProperty Name="InOROut" ColumnName="InOROut" />
+                <ScalarProperty Name="InOrOut" ColumnName="InOrOut" />
                 <ScalarProperty Name="cDate" ColumnName="cDate" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -97,7 +97,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

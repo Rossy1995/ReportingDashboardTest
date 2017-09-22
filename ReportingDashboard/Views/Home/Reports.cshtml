@@ -19,7 +19,7 @@
             <th style="border: 2px solid black; text-align: center; width: 20%">@Html.ActionLink("Current Date", "Reports", new { sortOrder = ViewBag.DateSortParm })</th>
         </tr>
 
-        @foreach (var item in Model.userTimes)
+        @foreach (var item in Model.UserTimes)
         {
             <tr>
                 <td style="border: 2px solid black; text-align: center">
@@ -32,7 +32,7 @@
                     @Html.DisplayFor(modelItem => item.cTime)
                 </td>
                 <td style="border: 2px solid black; text-align: center">
-                    @Html.DisplayFor(modelItem => item.InOROut)
+                    @Html.DisplayFor(modelItem => item.InOrOut)
                 </td>
                 <td style="border: 2px solid black; text-align: center">
                     @String.Format("{0:d}", item.cDate)

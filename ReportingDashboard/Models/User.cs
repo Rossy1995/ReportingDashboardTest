@@ -12,7 +12,7 @@ namespace ReportingDashboard.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class user
     {
         public int userid { get; set; }
         public string name { get; set; }

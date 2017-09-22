@@ -13,10 +13,10 @@ namespace ReportingDashboard.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GC : DbContext
+    public partial class gcEntities : DbContext
     {
-        public GC()
-            : base("name=GC")
+        public gcEntities()
+            : base("name=gcEntities")
         {
         }
     
@@ -25,7 +25,7 @@ namespace ReportingDashboard.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserTime> UserTime { get; set; }
+        public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<usertime> usertimes { get; set; }
     }
 }

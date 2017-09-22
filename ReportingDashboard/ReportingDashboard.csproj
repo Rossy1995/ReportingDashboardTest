@@ -227,17 +227,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="AuthAttribute.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="SendEmail.cs" />
-    <Compile Include="Startup.Owin.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="GoogleAuthenticatorTokenProvider.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BeaconModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -253,23 +242,33 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BeaconModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\user.cs">
+      <DependentUpon>BeaconModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usertime.cs">
+      <DependentUpon>BeaconModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SendEmail.cs" />
+    <Compile Include="Startup.Owin.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GoogleAuthenticatorTokenProvider.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DbAccessContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ReportsViewModel.cs" />
-    <Compile Include="Models\User.cs">
-      <DependentUpon>BeaconModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserTime.cs">
-      <DependentUpon>BeaconModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -297,15 +296,11 @@
       <DependentUpon>BeaconModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config">
@@ -362,9 +357,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
