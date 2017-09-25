@@ -2,64 +2,46 @@
 @{
     ViewBag.Title = "Home Page";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="~/Scripts/poller.js"></script>
+<script>
+    window.onload = function() {
+
+        var url = '@Url.Action("GetResults", "Home")';
+        callMe(url);
+    }
+    setInterval(function () {
+            var url = '@Url.Action("GetResults", "Home")';
+            callMe(url);
+        }
+    , 60000);
+</script>
+
 
 <div class="jumbotron">
     <h1>Welcome to the GC iBeacon Reporting Dashboard</h1>
     <p class="lead">This dashboard will display all the check in/check out times from registered users and provide the ability to register new users to the system</p>
-    <button onclick="myFunction()">Click me</button>
 </div>
 
 <div class="row">
     <div id="check_in" class="col-md-4">
         <h2>Recent Check-Ins</h2>
-        <table id="tblCheckIn">
-            <thead></thead>
-            <tbody></tbody>
+        <table id="tblCheckIn" style="background-color: white; width: 100%;">
+            <thead>
+                <tr>
+                    <th style="border: 2px solid black; text-align: center; width: 20%">Username</th>
+                    <th style="border: 2px solid black; text-align: center; width: 20%">Current Time</th>
+                    <th style="border: 2px solid black; text-align: center; width: 20%">In or Out</th>
+                </tr>
+            </thead>
+            <tbody style="text-align:center"></tbody>
         </table>
     </div>
-        <script src = "~/Scripts/jquery-1.10.2.min.js"></script>
-        <script type = "text/javascript">
-            $(document).ready(function() {
-                
-                $("#tblCheckIn tbody tr").remove();
-                $.ajax  
-                ({  
-                    type: 'POST',  
-                    url: '@Url.Action("GetAllCheckIns")',  
-                    dataType: 'json',  
-                    data: {},  
-                    success: function(data) {
-                        
-                        var items = '';  
-                        var rows = "<tr>" +  
-                            "<th>Username</th>" +
-                            "<th>Current Time</th>" +
-                            "<th>In or Out</th>" + "</tr>";
-
-                        $('#tblCheckIn tbody').append(rows);  
-  
-                        $.each(data, function(i, item)  
-                        {  
-                            var rows = "<tr><td>" + item.username + "</td><td>" + item.cTime + "</td><td>" + item.InOROut + "</td></tr>";  
-                            $('#tblCheckIn tbody').append(rows);  
-                        });  
-
-                        $('#check_in').load('Home/GetAllCheckIns');
-
-                    },
-                    error: function(ex)  
-                    {    
-                        alert("Message: ");  
-                    }  
-                });  
-                return false;  
-            }, 10000);
-        </script>
-    <div class="col-md-4">
+    <div class="col-md-4" style="overflow: auto; max-height: 300px;">
         <h2>Average Time Spent in Office</h2>
         <p>Placeholder for average time spent in office over a given day</p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" style="overflow: auto; max-height: 300px;">
         <h2>Users checked in most</h2>
         <p>Placeholder for how many times each user has checked in</p>
     </div>

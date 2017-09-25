@@ -16,19 +16,18 @@ namespace ReportingDashboard.Controllers
             return View();
         }
 
-        /*public JsonResult GetAllCheckIns()
+        [HttpGet]
+        public JsonResult GetResults()
         {
-            Models.GC obj = new Models.GC();
-            var users = obj.UserTime.Select(x => new
-            {
-                Username = x.username,
-                cTime = x.cTime,
-                InOrOut = x.InOROut
-            }).ToList();
-            return Json(users, JsonRequestBehavior.AllowGet);
-        }*/
+            var reports = from r in db.UserTime
+                select r;
 
-        [Authorize]       
+            var userTimes = reports.ToList();
+
+            return Json(userTimes, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
         public ActionResult Reports(string search, string sortOrder)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "user_desc" : "";
@@ -67,7 +66,7 @@ namespace ReportingDashboard.Controllers
 
         [Authorize]
         public ActionResult ExportToCSV(string search)
-        {            
+        {
             StringWriter sw = new StringWriter();
             var responseList = from r in db.UserTime
                                select r;
@@ -95,7 +94,7 @@ namespace ReportingDashboard.Controllers
             return View(new ReportsViewModel()
             {
                 UserTimes = responseList.ToList(),
-                SearchText= search
+                SearchText = search
             });
 
         }

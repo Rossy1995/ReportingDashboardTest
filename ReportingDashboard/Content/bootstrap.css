@@ -4,6 +4,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@import url('bootstrap.css');
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -182,6 +183,10 @@ optgroup {
 table {
   border-spacing: 0;
   border-collapse: collapse;
+    overflow: auto;
+}
+#tblCheckIn {
+    overflow: auto;
 }
 td,
 th {
@@ -1617,6 +1622,8 @@ pre code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+  overflow: auto;
+  max-height: 300px;
 }
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
   float: left;
