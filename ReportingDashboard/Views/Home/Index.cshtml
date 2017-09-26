@@ -14,7 +14,7 @@
             var url = '@Url.Action("GetResults", "Home")';
             callMe(url);
         }
-    , 60000);
+    , 10000);
 </script>
 
 
@@ -22,9 +22,8 @@
     <h1>Welcome to the GC iBeacon Reporting Dashboard</h1>
     <p class="lead">This dashboard will display all the check in/check out times from registered users and provide the ability to register new users to the system</p>
 </div>
-
 <div class="row">
-    <div id="check_in" class="col-md-4">
+    <div class="col-md-4" style="overflow: auto; max-height: 200px;">
         <h2>Recent Check-Ins</h2>
         <table id="tblCheckIn" style="background-color: white; width: 100%;">
             <thead>

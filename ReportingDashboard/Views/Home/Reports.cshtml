@@ -9,8 +9,8 @@
         Find by name: @Html.TextBoxFor(m => m.SearchText, new { id = "searchBox" })
         <input type="button" value="Search" name="Search" onclick="location.href='@Url.Action("Reports", "Home")?search=' + $('#searchBox').val()"/>
     </p>
-
-    <table style="background-color: white; width: 100%;">
+<div class="userTable">
+    <table style="background-color: white; width: 100%; height: 300px; overflow: auto; text-align: center;">
         <tr>
             <th style="border: 2px solid black; text-align: center; width: 20%">@Html.ActionLink("Username", "Reports", new { sortOrder = ViewBag.NameSortParm })</th>
             <th style="border: 2px solid black; text-align: center; width: 20%">Current Day</th>
@@ -18,7 +18,6 @@
             <th style="border: 2px solid black; text-align: center; width: 20%">In or Out</th>
             <th style="border: 2px solid black; text-align: center; width: 20%">@Html.ActionLink("Current Date", "Reports", new { sortOrder = ViewBag.DateSortParm })</th>
         </tr>
-
         @foreach (var item in Model.UserTimes)
         {
             <tr>
@@ -39,15 +38,10 @@
                 </td>
             </tr>
         }
-
-        <tr>
-            <td colspan="4">
-                <br />
-                <br />
-                <input type="button" value="Export to Excel" class="button" name="Export" onclick="location.href='@Url.Action("ExportToCSV", "Home")?search=' + $('#searchBox').val()" />
-            </td>
-        </tr>
     </table>
+</div>
+<input type="button" value="Export to Excel" class="excel_button" name="Export" onclick="location.href='@Url.Action("ExportToCSV", "Home")?search=' + $('#searchBox').val()" />
+
 
 
 

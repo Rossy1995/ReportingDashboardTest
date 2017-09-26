@@ -1,9 +1,11 @@
 @model ReportingDashboard.Models.ReportsViewModel
 @{
-    ViewBag.Title = "List of users for iBeacon Application";
+ViewBag.Title = "List of users for iBeacon Application";
 }
-<h2>@ViewBag.Title</h2>
-<table style="background-color: white; width: 100%;">
+<h2 style="text-align: center;">@ViewBag.Title</h2>
+
+<div class="userTable">
+    <table style="background-color: white; width: 100%; overflow: auto;  height: 500px;">
     <tr>
         <th style="border: 2px solid black; text-align: center; width: 20%">User ID</th>
         <th style="border: 2px solid black; text-align: center; width: 20%">Username</th>
@@ -20,4 +22,5 @@
             </td>
         </tr>
     }
-</table>
+    </table>
+</div>

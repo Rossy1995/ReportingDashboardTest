@@ -8,6 +8,7 @@
             dataType: "json",
             cache: false,
             success: function (data) {
+                $("#tblCheckIn tbody").html("");
                 $.each(data,
                     function (index, value) {
                         var hours = value.cTime.Hours < 10 ? "0" + value.cTime.Hours : value.cTime.Hours;

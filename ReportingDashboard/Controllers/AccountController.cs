@@ -135,8 +135,9 @@ namespace ReportingDashboard.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        
         [Auth(Roles = "Admin")]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
