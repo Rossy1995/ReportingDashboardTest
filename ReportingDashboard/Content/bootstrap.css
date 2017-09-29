@@ -6,9 +6,9 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 @import url('bootstrap.css');
 html {
-  font-family: sans-serif;
-  -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
+    font-family: GlacialIndifference;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
 }
 body {
   margin: 0;
@@ -264,6 +264,11 @@ th {
   .table-bordered td {
     border: 1px solid #ddd !important;
   }
+}
+@font-face {
+    font-family: 'GlacialIndifference';
+    src: url('../Fonts/GlacialIndifference-Regular.eot');
+    src: url('../fonts/GlacialIndifference-Regulareot?#iefix') format('embedded-opentype'), url('../fonts/GlacialIndifference-Regular.woff2') format('woff2'), url('../fonts/GlacialIndifference-Regular.woff') format('woff'), url('../fonts/GlacialIndifference-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
@@ -1087,11 +1092,11 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #333;
-  background-color: #fff;
+    font-family: "GlacialIndifference";
+    font-size: 16px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
 }
 input,
 button,
@@ -1192,6 +1197,7 @@ h6,
   font-weight: 500;
   line-height: 1.1;
   color: inherit;
+    padding-top: 40px;
 }
 h1 small,
 h2 small,
@@ -1604,7 +1610,8 @@ pre code {
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1170px;
+    width: 100%;
+      padding-right: 100px;
   }
 }
 .container-fluid {
@@ -1616,13 +1623,13 @@ pre code {
 .row {
   margin-right: -15px;
   margin-left: -15px;
+    margin-top: -32px;
 }
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
-  overflow: auto;
   max-height: 200px;
 }
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
@@ -2555,7 +2562,7 @@ output {
 }
 .form-control {
   display: block;
-  width: 100%;
+  width: 40%;
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
@@ -4010,7 +4017,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: #eee;
+  background-color: #aea;
   border-color: #337ab7;
 }
 .nav .nav-divider {
@@ -6765,5 +6772,6 @@ button.close {
     height: 300px;
     overflow: auto;
     text-align: center;
+    padding-left: 120px;
 }
 /*# sourceMappingURL=bootstrap.css.map */
