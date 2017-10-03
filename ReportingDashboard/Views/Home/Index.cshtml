@@ -3,6 +3,8 @@
     ViewBag.Title = "Home Page";
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/uk.js"></script>
 <script src="~/Scripts/poller.js"></script>
 <script>
     window.onload = function() {
@@ -18,11 +20,11 @@
 </script>
 
 
-<div class="jumbotron">
+<div class="jumbotron" style="position: relative; left: 42px;">
     <h1>Welcome to the GC iBeacon Reporting Dashboard</h1>
     <p class="lead">This dashboard will display all the check in/check out times from registered users and provide the ability to register new users to the system</p>
 </div>
-<div class="row">
+<div class="row" style="position: absolute; left: 25px;">
     <div class="col-md-4" style="overflow: auto; max-height: 200px;">
         <h2>Recent Check-Ins</h2>
         <table id="tblCheckIn" style="background-color: white; width: 100%;">

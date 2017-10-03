@@ -21,8 +21,7 @@ namespace ReportingDashboard.Controllers
         {
             var reports = from r in db.UserTime
                 select r;
-
-            var userTimes = reports.ToList();
+            var userTimes = reports.ToList().Where(x => x.cDate >= DateTime.Today && x.cDate <= DateTime.Today.AddDays(1).AddTicks(-1)).OrderByDescending(x=> x.cTime);
 
             return Json(userTimes, JsonRequestBehavior.AllowGet);
         }

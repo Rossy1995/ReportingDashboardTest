@@ -17,8 +17,8 @@ namespace ReportingDashboard.Models
         public int timeid { get; set; }
         public string username { get; set; }
         public string cDay { get; set; }
-        public Nullable<System.TimeSpan> cTime { get; set; }
+        public TimeSpan cTime { get; set; }
         public string InOrOut { get; set; }
-        public Nullable<System.DateTime> cDate { get; set; }
+        public DateTime cDate { get; set; }
     }
 }
